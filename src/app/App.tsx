@@ -1,4 +1,4 @@
-import {Assistant} from "./Assistant/Assistant.tsx";
+import {Assistant} from "@app/components/Assistant/Assistant.tsx";
 
 function App() {
   return (

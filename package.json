@@ -10,14 +10,22 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@hey-api/client-axios": "^0.2.7",
     "@patternfly/chatbot": "^2.1.0",
     "@patternfly/react-core": "^6.0.0",
     "@patternfly/react-icons": "^6.0.0",
     "@patternfly/react-styles": "^6.0.0",
+    "@segment/analytics-next": "^1.64.0",
+    "@tanstack/react-query": "^5.61.0",
+    "@tanstack/react-query-devtools": "^5.61.0",
+    "axios": "^1.7.2",
     "dompurify": "^3.2.3",
+    "oidc-client-ts": "^2.4.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "sirv-cli": "^3.0.0"
+    "react-oidc-context": "^2.3.1",
+    "sirv-cli": "^3.0.0",
+    "web-vitals": "^0.2.4"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",

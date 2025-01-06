@@ -6,7 +6,13 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
+      '@app/': '/src/app/',
       '@/': '/src/'
+    }
+  },
+  server: {
+    proxy: {
+      '/api': 'http://localhost:8080'
     }
   }
 })
