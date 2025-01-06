@@ -1,10 +1,10 @@
 // this is a modified version of the packages/module/patternfly-docs/content/extensions/chatbot/examples/demos/EmbeddedChatbot.tsx
 // component from the PatternFly Chatbot demo
-import patternflyAvatar from '../assets/patternfly_avatar.jpg';
+import patternflyAvatar from '@/assets/patternfly_avatar.jpg';
 
-import PFHorizontalLogoColor from '../assets/PF-HorizontalLogo-Color.svg';
-import PFHorizontalLogoReverse from '../assets/PF-HorizontalLogo-Reverse.svg';
-import userAvatar from '../assets/user_avatar.svg';
+import PFHorizontalLogoColor from '@/assets/PF-HorizontalLogo-Color.svg';
+import PFHorizontalLogoReverse from '@/assets/PF-HorizontalLogo-Reverse.svg';
+import userAvatar from '@/assets/user_avatar.svg';
 
 import Chatbot, { ChatbotDisplayMode } from '@patternfly/chatbot/dist/dynamic/Chatbot';
 import ChatbotContent from '@patternfly/chatbot/dist/dynamic/ChatbotContent';
