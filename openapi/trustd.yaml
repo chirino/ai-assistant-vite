@@ -254,6 +254,16 @@ paths:
       - ai
       operationId: listConversations
       parameters:
+      - name: q
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: sort
+        in: query
+        required: false
+        schema:
+          type: string
       - name: offset
         in: query
         description: |-

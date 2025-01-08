@@ -1085,6 +1085,8 @@ export type ListConversationsData = {
          * NOTE: The order of items is defined by the API being called.
          */
         offset?: number;
+        q?: string;
+        sort?: string;
     };
 };
 
