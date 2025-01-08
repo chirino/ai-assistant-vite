@@ -32,6 +32,7 @@ import {
 } from "@app/queries/conversations.ts";
 
 import {Conversation as ApiConversation,} from "@app/client";
+import {WelcomePrompt} from "@patternfly/chatbot/src/ChatbotWelcomePrompt/ChatbotWelcomePrompt.tsx";
 
 const footnoteProps = {
   label: 'Lightspeed uses AI. Check for mistakes.',
@@ -55,88 +56,39 @@ const footnoteProps = {
   },
 };
 
-const markdown = `A paragraph with *emphasis* and **strong importance**.
+// const initialMessages: MessageProps[] = [
+//   {
+//     id: '1',
+//     role: 'user',
+//     content: 'Hello, can you give me an example of what you can do?',
+//     name: 'User',
+//     avatar: userAvatar,
+//     timestamp: date.toLocaleString(),
+//     avatarProps: {isBordered: true},
+//   },
+//   {
+//     id: '2',
+//     role: 'bot',
+//     content: markdown,
+//     name: 'Bot',
+//     avatar: patternflyAvatar,
+//     timestamp: date.toLocaleString(),
+//     actions: {
+//       // eslint-disable-next-line no-console
+//       positive: {onClick: () => console.log('Good response')},
+//       // eslint-disable-next-line no-console
+//       negative: {onClick: () => console.log('Bad response')},
+//       // eslint-disable-next-line no-console
+//       copy: {onClick: () => console.log('Copy')},
+//       // eslint-disable-next-line no-console
+//       share: {onClick: () => console.log('Share')},
+//       // eslint-disable-next-line no-console
+//       listen: {onClick: () => console.log('Listen')},
+//     },
+//   },
+// ];
 
-> A block quote with ~strikethrough~ and a URL: https://reactjs.org.
 
-Here is an inline code - \`() => void\`
-
-Here is some YAML code:
-
-~~~yaml
-apiVersion: helm.openshift.io/v1beta1/
-kind: HelmChartRepository
-metadata:
-  name: azure-sample-repo0oooo00ooo
-spec:
-  connectionConfig:
-  url: https://raw.githubusercontent.com/Azure-Samples/helm-charts/master/docs
-~~~
-
-Here is some JavaScript code:
-
-~~~js
-import React from 'react';
-
-const MessageLoading = () => (
-  <div className="pf-chatbot__message-loading">
-    <span className="pf-chatbot__message-loading-dots">
-      <span className="pf-v6-screen-reader">Loading message</span>
-    </span>
-  </div>
-);
-
-export default MessageLoading;
-
-~~~
-`;
-
-// It's important to set a date and timestamp prop since the Message components re-render.
-// The timestamps re-render with them.
-const date = new Date();
-
-const initialMessages: MessageProps[] = [
-  {
-    id: '1',
-    role: 'user',
-    content: 'Hello, can you give me an example of what you can do?',
-    name: 'User',
-    avatar: userAvatar,
-    timestamp: date.toLocaleString(),
-    avatarProps: {isBordered: true},
-  },
-  {
-    id: '2',
-    role: 'bot',
-    content: markdown,
-    name: 'Bot',
-    avatar: patternflyAvatar,
-    timestamp: date.toLocaleString(),
-    actions: {
-      // eslint-disable-next-line no-console
-      positive: {onClick: () => console.log('Good response')},
-      // eslint-disable-next-line no-console
-      negative: {onClick: () => console.log('Bad response')},
-      // eslint-disable-next-line no-console
-      copy: {onClick: () => console.log('Copy')},
-      // eslint-disable-next-line no-console
-      share: {onClick: () => console.log('Share')},
-      // eslint-disable-next-line no-console
-      listen: {onClick: () => console.log('Listen')},
-    },
-  },
-];
-
-const welcomePrompts = [
-  {
-    title: 'Get CVE information',
-    message: 'Am I vulnerable to CVE-2021-12345?',
-  },
-  {
-    title: 'Is a product affected by any CVEs?',
-    message: 'Is Red Hat Enterprise Linux 7 affected by any CVEs?',
-  },
-];
 
 export const Assistant: React.FunctionComponent = () => {
 
@@ -346,7 +298,7 @@ export const AssistantUpdateMessageBox = (props: {
           <ChatbotWelcomePrompt
             title="Hello, Chatbot User"
             description="How may I help you today?"
-            prompts={welcomePrompts}
+            // prompts={welcomePrompts}
           />
 
           {/* This code block enables scrolling to the top of the last message.
@@ -391,6 +343,20 @@ export const AssistantNewMessageBox = (props: {
     });
     props.setConversationId(conversation.id);
   }
+
+  const welcomePrompts : WelcomePrompt[] = [
+    {
+      title: 'Get CVE information',
+      message: 'Am I vulnerable to CVE-2021-12345?',
+      onClick: () => {
+
+      }
+    },
+    {
+      title: 'Is a product affected by any CVEs?',
+      message: 'Is Red Hat Enterprise Linux 7 affected by any CVEs?',
+    },
+  ];
 
   return (
     <>
