@@ -1,30 +1,42 @@
 import React from "react";
 
-import {createRoot} from "react-dom/client";
-import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
-import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
-import App from "@app/App";
-import reportWebVitals from "@app/reportWebVitals";
-import {OidcProvider} from "@app/components/OidcProvider";
+import { createRoot } from "react-dom/client";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import reportWebVitals from "@src/reportWebVitals";
+import { OidcProvider } from "@src/components/OidcProvider";
 
-import '@patternfly/react-core/dist/styles/base.css';
-import '@patternfly/chatbot/dist/css/main.css';
+import "@patternfly/react-core/dist/styles/base.css";
+import "@patternfly/chatbot/dist/css/main.css";
+import { createRouter, RouterProvider } from "@tanstack/react-router";
+// Import the generated route tree
+import { routeTree } from "./routeTree.gen";
 
 const queryClient = new QueryClient();
 
-const container = document.getElementById("root");
-const root = createRoot(container!);
+// Create a new router instance
+const router = createRouter({ routeTree });
+
+// Register the router instance for type safety
+declare module "@tanstack/react-router" {
+  interface Register {
+    router: typeof router;
+  }
+}
 
 const renderApp = () => {
+  const container = document.getElementById("root");
+  const root = createRoot(container!);
+
   return root.render(
     <React.StrictMode>
       <OidcProvider>
         <QueryClientProvider client={queryClient}>
-          <App />
+          <RouterProvider router={router} />
           <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
       </OidcProvider>
-    </React.StrictMode>
+    </React.StrictMode>,
   );
 };
 

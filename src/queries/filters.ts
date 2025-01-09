@@ -5,17 +5,15 @@ export interface HubFilter {
     | string
     | number
     | {
-    list: (string | number)[];
-    operator?: "AND" | "OR";
-  };
+        list: (string | number)[];
+        operator?: "AND" | "OR";
+      };
 }
 
 /**
  * Like serializeRequestParamsForHub but returns a plain object instead of URLSearchParams.
  */
-export const encodeFilters = (
-  filters: HubFilter[]
-): string | undefined => {
+export const encodeFilters = (filters: HubFilter[]): string | undefined => {
   let q = undefined as string | undefined;
   if (filters) {
     q = filters

@@ -1,7 +1,6 @@
 import { OidcClientSettings } from "oidc-client-ts";
-
-import { isAuthServerEmbedded } from "./Constants";
 import { ENV } from "./env";
+import { isAuthServerEmbedded } from "@src/libs/constants.ts";
 
 export const OIDC_SERVER_URL = isAuthServerEmbedded
   ? ENV.OIDC_SERVER_EMBEDDED_PATH || "/auth/realms/trustify"

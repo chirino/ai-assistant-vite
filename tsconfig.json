@@ -7,7 +7,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@app/*": ["src/app/*"],
+      "@src/*": ["src/*"],
       "@assets/*": [
         "../node_modules/@patternfly/react-core/dist/styles/assets/*"
       ],

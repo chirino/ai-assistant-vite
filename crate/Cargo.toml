@@ -1,0 +1,13 @@
+[package]
+name = "asssistant-ui"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "1"
+serde = { version = "1.0.201", features = ["derive"] }
+serde_json = "1.0.117"
+static-files = "0.2.1"
+
+[build-dependencies]
+static-files = "0.2.1"

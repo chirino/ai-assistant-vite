@@ -1,14 +1,19 @@
-import React, {Suspense} from "react";
+import React, { Suspense } from "react";
 
-import {AuthProvider, useAuth} from "react-oidc-context";
+import { AuthProvider, useAuth } from "react-oidc-context";
 
-import {initInterceptors} from "@app/axios-config";
-import ENV from "@app/env";
-import {oidcClientSettings} from "@app/oidc";
-import {Bullseye, EmptyState, EmptyStateBody, EmptyStateVariant,} from "@patternfly/react-core";
+import { initInterceptors } from "@src/axios-config";
+import {
+  Bullseye,
+  EmptyState,
+  EmptyStateBody,
+  EmptyStateVariant,
+} from "@patternfly/react-core";
 
-import {AppPlaceholder} from "./AppPlaceholder";
-import {CubesIcon} from "@patternfly/react-icons";
+import { AppPlaceholder } from "./AppPlaceholder";
+import { CubesIcon } from "@patternfly/react-icons";
+import { oidcClientSettings } from "@src/libs/oidc.ts";
+import ENV from "@src/libs/env.ts";
 
 interface IOidcProviderProps {
   children: React.ReactNode;
@@ -25,7 +30,7 @@ export const OidcProvider: React.FC<IOidcProviderProps> = ({ children }) => {
         window.history.replaceState(
           {},
           document.title,
-          window.location.pathname
+          window.location.pathname,
         )
       }
     >
@@ -43,7 +48,7 @@ const AuthEnabledOidcProvider: React.FC<IOidcProviderProps> = ({
     if (!auth.isAuthenticated && !auth.isLoading && !auth.error) {
       auth.signinRedirect();
     }
-  }, [auth.isAuthenticated, auth.isLoading, auth.error]);
+  }, [auth]);
 
   React.useEffect(() => {
     initInterceptors();
@@ -56,7 +61,11 @@ const AuthEnabledOidcProvider: React.FC<IOidcProviderProps> = ({
   } else if (auth.error) {
     return (
       <Bullseye>
-        <EmptyState titleText="Auth Error" variant={EmptyStateVariant.sm} icon={CubesIcon}>
+        <EmptyState
+          titleText="Auth Error"
+          variant={EmptyStateVariant.sm}
+          icon={CubesIcon}
+        >
           <EmptyStateBody>
             {`${auth.error.name}: ${auth.error.message}`}. Revisit your OIDC
             configuration or contact your admin.

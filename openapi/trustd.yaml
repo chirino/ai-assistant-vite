@@ -299,12 +299,6 @@ paths:
       tags:
       - ai
       operationId: createConversation
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ChatState'
-        required: true
       responses:
         '200':
           description: The resulting conversation
