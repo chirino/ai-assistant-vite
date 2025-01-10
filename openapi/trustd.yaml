@@ -2472,20 +2472,24 @@ components:
       required:
       - message_type
       - content
+      - timestamp
       properties:
         content:
           type: string
-        internal_state:
-          type:
-          - string
-          - 'null'
         message_type:
           $ref: '#/components/schemas/MessageType'
+        timestamp:
+          type: string
+          format: date-time
     ChatState:
       type: object
       required:
       - messages
       properties:
+        internal_state:
+          type:
+          - string
+          - 'null'
         messages:
           type: array
           items:
@@ -2551,18 +2555,20 @@ components:
       type: object
       required:
       - id
-      - state
+      - messages
       - updated_at
       - seq
       properties:
         id:
           type: string
           format: uuid
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChatMessage'
         seq:
           type: integer
           format: int32
-        state:
-          $ref: '#/components/schemas/ChatState'
         updated_at:
           type: string
           format: date-time

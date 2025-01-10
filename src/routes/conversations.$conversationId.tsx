@@ -31,15 +31,16 @@ function ConversationMessageBox() {
     }
     const results = [] as MessageProps[];
 
-    console.log("messages", conversationQuery.data.state.messages);
+    console.log("messages", conversationQuery.data.messages);
 
-    conversationQuery.data.state.messages.forEach((message) => {
+    conversationQuery.data.messages.forEach((message) => {
       if (message.message_type == "human") {
         results.push({
           content: message.content,
           role: "user",
           name: "user",
           avatar: userAvatar,
+          timestamp: message.timestamp,
         });
       } else if (message.message_type == "ai") {
         results.push({
@@ -47,6 +48,7 @@ function ConversationMessageBox() {
           role: "bot",
           name: "bot",
           avatar: patternflyAvatar,
+          timestamp: message.timestamp,
         });
       }
     });
@@ -86,16 +88,17 @@ function ConversationMessageBox() {
       // for each item in newMessages
       newMessages.forEach((message) => {
         update.seq += 1;
-        update.state.messages.push({
+        update.messages.push({
           message_type: "human",
           content: message,
+          timestamp: new Date().toISOString(),
         });
       });
 
       (async () => {
         const conversation =
           await updateConversationMutation.mutateAsync(update);
-        const messages = conversation.state.messages;
+        const messages = conversation.messages;
         setNewMessages([]);
         setAnnouncement(
           `Message from Bot: ${messages[messages.length - 1].content}`,

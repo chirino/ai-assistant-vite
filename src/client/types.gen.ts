@@ -162,11 +162,12 @@ export type BinaryByteSize = string;
 
 export type ChatMessage = {
   content: string;
-  internal_state?: string | null;
   message_type: MessageType;
+  timestamp: string;
 };
 
 export type ChatState = {
+  internal_state?: string | null;
   messages: Array<ChatMessage>;
 };
 
@@ -214,8 +215,8 @@ export type CommonImporter = {
 
 export type Conversation = {
   id: string;
+  messages: Array<ChatMessage>;
   seq: number;
-  state: ChatState;
   updated_at: string;
 };
 

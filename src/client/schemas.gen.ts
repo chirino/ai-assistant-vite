@@ -406,16 +406,17 @@ export const BinaryByteSizeSchema = {
 
 export const ChatMessageSchema = {
   type: "object",
-  required: ["message_type", "content"],
+  required: ["message_type", "content", "timestamp"],
   properties: {
     content: {
       type: "string",
     },
-    internal_state: {
-      type: ["string", "null"],
-    },
     message_type: {
       $ref: "#/components/schemas/MessageType",
+    },
+    timestamp: {
+      type: "string",
+      format: "date-time",
     },
   },
 } as const;
@@ -424,6 +425,9 @@ export const ChatStateSchema = {
   type: "object",
   required: ["messages"],
   properties: {
+    internal_state: {
+      type: ["string", "null"],
+    },
     messages: {
       type: "array",
       items: {
@@ -521,18 +525,21 @@ export const CommonImporterSchema = {
 
 export const ConversationSchema = {
   type: "object",
-  required: ["id", "state", "updated_at", "seq"],
+  required: ["id", "messages", "updated_at", "seq"],
   properties: {
     id: {
       type: "string",
       format: "uuid",
     },
+    messages: {
+      type: "array",
+      items: {
+        $ref: "#/components/schemas/ChatMessage",
+      },
+    },
     seq: {
       type: "integer",
       format: "int32",
-    },
-    state: {
-      $ref: "#/components/schemas/ChatState",
     },
     updated_at: {
       type: "string",
