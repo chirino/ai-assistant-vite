@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import {
+  ConversationsQueryKey,
   useGetConversationQuery,
   useUpdateConversationMutation,
 } from "@src/queries/conversations.ts";
@@ -16,6 +17,7 @@ import ChatbotFooter, {
 } from "@patternfly/chatbot/dist/esm/ChatbotFooter";
 import MessageBar from "@patternfly/chatbot/dist/esm/MessageBar";
 import { useAuth } from "react-oidc-context";
+import {useQueryClient} from "@tanstack/react-query";
 
 export const Route = createFileRoute("/conversations/$conversationId")({
   component: ConversationMessageBox,
@@ -33,14 +35,14 @@ function ConversationMessageBox() {
     ];
   }, [auth]);
 
+  const queryClient = useQueryClient();
   // const messages = (conversationQuery.data?.state.messages) || [];
   const messages: MessageProps[] = useMemo(() => {
     if (conversationQuery.isLoading || conversationQuery.data == null) {
       return [];
     }
     const results = [] as MessageProps[];
-
-    console.log("messages", conversationQuery.data.messages);
+    let botMessageCount = 0;
 
     conversationQuery.data.messages.forEach((message) => {
       if (message.message_type == "human") {
@@ -52,6 +54,7 @@ function ConversationMessageBox() {
           timestamp: message.timestamp,
         });
       } else if (message.message_type == "ai") {
+        botMessageCount += 1;
         results.push({
           content: message.content,
           role: "bot",
@@ -59,6 +62,11 @@ function ConversationMessageBox() {
           avatar: patternflyAvatar,
           timestamp: message.timestamp,
         });
+      }
+
+      // a conversation will not exist in conversations list until the first bot message is sent
+      if ( botMessageCount == 1 ) {
+        queryClient.invalidateQueries({ queryKey: [ConversationsQueryKey] });
       }
     });
 
