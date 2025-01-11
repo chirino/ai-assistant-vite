@@ -2,7 +2,9 @@
 // component from the PatternFly Chatbot demo
 import PFHorizontalLogoColor from "@src/assets/PF-HorizontalLogo-Color.svg";
 import PFHorizontalLogoReverse from "@src/assets/PF-HorizontalLogo-Reverse.svg";
-import Chatbot, {ChatbotDisplayMode,} from "@patternfly/chatbot/dist/dynamic/Chatbot";
+import Chatbot, {
+  ChatbotDisplayMode,
+} from "@patternfly/chatbot/dist/dynamic/Chatbot";
 import ChatbotConversationHistoryNav, {
   Conversation,
 } from "@patternfly/chatbot/dist/dynamic/ChatbotConversationHistoryNav";
@@ -11,10 +13,13 @@ import ChatbotHeader, {
   ChatbotHeaderMenu,
   ChatbotHeaderTitle,
 } from "@patternfly/chatbot/dist/dynamic/ChatbotHeader";
-import {Brand, Bullseye} from "@patternfly/react-core";
-import React, {useMemo} from "react";
-import {useCreateConversationMutation, useListConversationsQuery,} from "@src/queries/conversations.ts";
-import {createFileRoute, Outlet, useNavigate} from "@tanstack/react-router";
+import { Brand, Bullseye } from "@patternfly/react-core";
+import React, { useMemo } from "react";
+import {
+  useCreateConversationMutation,
+  useListConversationsQuery,
+} from "@src/queries/conversations.ts";
+import { createFileRoute, Outlet, useNavigate } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/conversations")({
   component: Conversations,
@@ -43,7 +48,7 @@ function Conversations() {
     const results = {} as { [key: string]: Conversation[] };
     listConversationsQuery.data.items.forEach((conversation) => {
       const updated_at = new Date(conversation.updated_at);
-      const key = updated_at.toLocaleString("default", {month: "long"});
+      const key = updated_at.toLocaleString("default", { month: "long" });
       if (results[key] == null) {
         results[key] = [];
       }
@@ -148,7 +153,7 @@ function Conversations() {
               </ChatbotHeaderActions>
               */}
             </ChatbotHeader>
-            <Outlet/>
+            <Outlet />
           </>
         }
       ></ChatbotConversationHistoryNav>

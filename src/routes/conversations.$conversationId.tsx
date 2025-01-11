@@ -15,6 +15,7 @@ import ChatbotFooter, {
   ChatbotFootnote,
 } from "@patternfly/chatbot/dist/esm/ChatbotFooter";
 import MessageBar from "@patternfly/chatbot/dist/esm/MessageBar";
+import { useAuth } from "react-oidc-context";
 
 export const Route = createFileRoute("/conversations/$conversationId")({
   component: ConversationMessageBox,
@@ -23,6 +24,14 @@ export const Route = createFileRoute("/conversations/$conversationId")({
 function ConversationMessageBox() {
   const { conversationId } = Route.useParams();
   const conversationQuery = useGetConversationQuery(conversationId);
+
+  const auth = useAuth();
+  const [userName, userPicture] = useMemo(() => {
+    return [
+      auth.user?.profile.preferred_username || auth.user?.profile.sub,
+      auth.user?.profile.picture,
+    ];
+  }, [auth]);
 
   // const messages = (conversationQuery.data?.state.messages) || [];
   const messages: MessageProps[] = useMemo(() => {
@@ -38,15 +47,15 @@ function ConversationMessageBox() {
         results.push({
           content: message.content,
           role: "user",
-          name: "user",
-          avatar: userAvatar,
+          name: userName,
+          avatar: userPicture || userAvatar,
           timestamp: message.timestamp,
         });
       } else if (message.message_type == "ai") {
         results.push({
           content: message.content,
           role: "bot",
-          name: "bot",
+          name: "Assistant",
           avatar: patternflyAvatar,
           timestamp: message.timestamp,
         });
@@ -56,7 +65,12 @@ function ConversationMessageBox() {
     console.log("results", results);
 
     return results;
-  }, [conversationQuery.data, conversationQuery.isLoading]);
+  }, [
+    conversationQuery.data,
+    conversationQuery.isLoading,
+    userName,
+    userPicture,
+  ]);
 
   // const [messages, setMessages] = React.useState<MessageProps[]>(initialMessages);
   const [announcement, setAnnouncement] = React.useState<string>();
@@ -139,7 +153,7 @@ function ConversationMessageBox() {
 
         <MessageBox announcement={announcement}>
           <ChatbotWelcomePrompt
-            title="Hello, Chatbot User"
+            title={`Hello, ${userName}`}
             description="How may I help you today?"
             // prompts={welcomePrompts}
           />
