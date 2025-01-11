@@ -119,15 +119,6 @@ export type AnalysisStatus = {
   sbom_count: number;
 };
 
-export type AncNode = {
-  name: string;
-  node_id: string;
-  purl: string;
-  relationship: string;
-  sbom_id: string;
-  version: string;
-};
-
 export type AncestorSummary = {
   ancestors: Array<AncNode>;
   document_id: string;
@@ -137,6 +128,15 @@ export type AncestorSummary = {
   product_version: string;
   published: string;
   purl: string;
+  sbom_id: string;
+  version: string;
+};
+
+export type AncNode = {
+  name: string;
+  node_id: string;
+  purl: string;
+  relationship: string;
   sbom_id: string;
   version: string;
 };

@@ -3,7 +3,7 @@
 import {
   createClient,
   createConfig,
-  type Options,
+  type OptionsLegacyParser,
 } from "@hey-api/client-axios";
 import type {
   InfoError,
@@ -217,7 +217,7 @@ import type {
 export const client = createClient(createConfig());
 
 export const info = <ThrowOnError extends boolean = false>(
-  options?: Options<unknown, ThrowOnError>,
+  options?: OptionsLegacyParser<unknown, ThrowOnError>,
 ) => {
   return (options?.client ?? client).get<InfoResponse, InfoError, ThrowOnError>(
     {
@@ -231,7 +231,7 @@ export const info = <ThrowOnError extends boolean = false>(
  * List advisories
  */
 export const listAdvisories = <ThrowOnError extends boolean = false>(
-  options?: Options<ListAdvisoriesData, ThrowOnError>,
+  options?: OptionsLegacyParser<ListAdvisoriesData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).get<
     ListAdvisoriesResponse,
@@ -247,7 +247,7 @@ export const listAdvisories = <ThrowOnError extends boolean = false>(
  * Upload a new advisory
  */
 export const uploadAdvisory = <ThrowOnError extends boolean = false>(
-  options: Options<UploadAdvisoryData, ThrowOnError>,
+  options: OptionsLegacyParser<UploadAdvisoryData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).post<
     UploadAdvisoryResponse,
@@ -263,7 +263,7 @@ export const uploadAdvisory = <ThrowOnError extends boolean = false>(
  * Replace the labels of an advisory
  */
 export const updateAdvisoryLabels = <ThrowOnError extends boolean = false>(
-  options: Options<UpdateAdvisoryLabelsData, ThrowOnError>,
+  options: OptionsLegacyParser<UpdateAdvisoryLabelsData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).put<
     UpdateAdvisoryLabelsResponse,
@@ -279,7 +279,7 @@ export const updateAdvisoryLabels = <ThrowOnError extends boolean = false>(
  * Modify existing labels of an advisory
  */
 export const patchAdvisoryLabels = <ThrowOnError extends boolean = false>(
-  options: Options<PatchAdvisoryLabelsData, ThrowOnError>,
+  options: OptionsLegacyParser<PatchAdvisoryLabelsData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).patch<
     PatchAdvisoryLabelsResponse,
@@ -295,7 +295,7 @@ export const patchAdvisoryLabels = <ThrowOnError extends boolean = false>(
  * Get an advisory
  */
 export const getAdvisory = <ThrowOnError extends boolean = false>(
-  options: Options<GetAdvisoryData, ThrowOnError>,
+  options: OptionsLegacyParser<GetAdvisoryData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).get<
     GetAdvisoryResponse,
@@ -311,7 +311,7 @@ export const getAdvisory = <ThrowOnError extends boolean = false>(
  * Delete an advisory
  */
 export const deleteAdvisory = <ThrowOnError extends boolean = false>(
-  options: Options<DeleteAdvisoryData, ThrowOnError>,
+  options: OptionsLegacyParser<DeleteAdvisoryData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).delete<
     DeleteAdvisoryResponse,
@@ -327,7 +327,7 @@ export const deleteAdvisory = <ThrowOnError extends boolean = false>(
  * Download an advisory document
  */
 export const downloadAdvisory = <ThrowOnError extends boolean = false>(
-  options: Options<DownloadAdvisoryData, ThrowOnError>,
+  options: OptionsLegacyParser<DownloadAdvisoryData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).get<
     DownloadAdvisoryResponse,
@@ -340,7 +340,7 @@ export const downloadAdvisory = <ThrowOnError extends boolean = false>(
 };
 
 export const completions = <ThrowOnError extends boolean = false>(
-  options: Options<CompletionsData, ThrowOnError>,
+  options: OptionsLegacyParser<CompletionsData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).post<
     CompletionsResponse,
@@ -353,7 +353,7 @@ export const completions = <ThrowOnError extends boolean = false>(
 };
 
 export const listConversations = <ThrowOnError extends boolean = false>(
-  options?: Options<ListConversationsData, ThrowOnError>,
+  options?: OptionsLegacyParser<ListConversationsData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).get<
     ListConversationsResponse,
@@ -366,7 +366,7 @@ export const listConversations = <ThrowOnError extends boolean = false>(
 };
 
 export const createConversation = <ThrowOnError extends boolean = false>(
-  options?: Options<unknown, ThrowOnError>,
+  options?: OptionsLegacyParser<unknown, ThrowOnError>,
 ) => {
   return (options?.client ?? client).post<
     CreateConversationResponse,
@@ -379,7 +379,7 @@ export const createConversation = <ThrowOnError extends boolean = false>(
 };
 
 export const getConversation = <ThrowOnError extends boolean = false>(
-  options: Options<GetConversationData, ThrowOnError>,
+  options: OptionsLegacyParser<GetConversationData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).get<
     GetConversationResponse,
@@ -392,7 +392,7 @@ export const getConversation = <ThrowOnError extends boolean = false>(
 };
 
 export const updateConversation = <ThrowOnError extends boolean = false>(
-  options: Options<UpdateConversationData, ThrowOnError>,
+  options: OptionsLegacyParser<UpdateConversationData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).put<
     UpdateConversationResponse,
@@ -405,7 +405,7 @@ export const updateConversation = <ThrowOnError extends boolean = false>(
 };
 
 export const deleteConversation = <ThrowOnError extends boolean = false>(
-  options: Options<DeleteConversationData, ThrowOnError>,
+  options: OptionsLegacyParser<DeleteConversationData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).delete<
     DeleteConversationResponse,
@@ -418,7 +418,7 @@ export const deleteConversation = <ThrowOnError extends boolean = false>(
 };
 
 export const aiFlags = <ThrowOnError extends boolean = false>(
-  options?: Options<unknown, ThrowOnError>,
+  options?: OptionsLegacyParser<unknown, ThrowOnError>,
 ) => {
   return (options?.client ?? client).get<
     AiFlagsResponse,
@@ -431,7 +431,7 @@ export const aiFlags = <ThrowOnError extends boolean = false>(
 };
 
 export const aiTools = <ThrowOnError extends boolean = false>(
-  options?: Options<unknown, ThrowOnError>,
+  options?: OptionsLegacyParser<unknown, ThrowOnError>,
 ) => {
   return (options?.client ?? client).get<
     AiToolsResponse,
@@ -444,7 +444,7 @@ export const aiTools = <ThrowOnError extends boolean = false>(
 };
 
 export const aiToolCall = <ThrowOnError extends boolean = false>(
-  options: Options<AiToolCallData, ThrowOnError>,
+  options: OptionsLegacyParser<AiToolCallData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).post<
     AiToolCallResponse,
@@ -457,7 +457,7 @@ export const aiToolCall = <ThrowOnError extends boolean = false>(
 };
 
 export const searchComponentDeps = <ThrowOnError extends boolean = false>(
-  options?: Options<SearchComponentDepsData, ThrowOnError>,
+  options?: OptionsLegacyParser<SearchComponentDepsData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).get<
     SearchComponentDepsResponse,
@@ -470,7 +470,7 @@ export const searchComponentDeps = <ThrowOnError extends boolean = false>(
 };
 
 export const getComponentDeps = <ThrowOnError extends boolean = false>(
-  options: Options<GetComponentDepsData, ThrowOnError>,
+  options: OptionsLegacyParser<GetComponentDepsData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).get<
     GetComponentDepsResponse,
@@ -485,7 +485,10 @@ export const getComponentDeps = <ThrowOnError extends boolean = false>(
 export const searchComponentRootComponents = <
   ThrowOnError extends boolean = false,
 >(
-  options?: Options<SearchComponentRootComponentsData, ThrowOnError>,
+  options?: OptionsLegacyParser<
+    SearchComponentRootComponentsData,
+    ThrowOnError
+  >,
 ) => {
   return (options?.client ?? client).get<
     SearchComponentRootComponentsResponse,
@@ -500,7 +503,7 @@ export const searchComponentRootComponents = <
 export const getComponentRootComponents = <
   ThrowOnError extends boolean = false,
 >(
-  options: Options<GetComponentRootComponentsData, ThrowOnError>,
+  options: OptionsLegacyParser<GetComponentRootComponentsData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).get<
     GetComponentRootComponentsResponse,
@@ -513,7 +516,7 @@ export const getComponentRootComponents = <
 };
 
 export const status = <ThrowOnError extends boolean = false>(
-  options?: Options<unknown, ThrowOnError>,
+  options?: OptionsLegacyParser<unknown, ThrowOnError>,
 ) => {
   return (options?.client ?? client).get<
     StatusResponse,
@@ -529,7 +532,7 @@ export const status = <ThrowOnError extends boolean = false>(
  * Upload a new dataset
  */
 export const uploadDataset = <ThrowOnError extends boolean = false>(
-  options: Options<UploadDatasetData, ThrowOnError>,
+  options: OptionsLegacyParser<UploadDatasetData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).post<
     UploadDatasetResponse,
@@ -545,7 +548,7 @@ export const uploadDataset = <ThrowOnError extends boolean = false>(
  * List importer configurations
  */
 export const listImporters = <ThrowOnError extends boolean = false>(
-  options?: Options<unknown, ThrowOnError>,
+  options?: OptionsLegacyParser<unknown, ThrowOnError>,
 ) => {
   return (options?.client ?? client).get<
     ListImportersResponse,
@@ -561,7 +564,7 @@ export const listImporters = <ThrowOnError extends boolean = false>(
  * Get an importer configuration
  */
 export const getImporter = <ThrowOnError extends boolean = false>(
-  options: Options<GetImporterData, ThrowOnError>,
+  options: OptionsLegacyParser<GetImporterData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).get<
     GetImporterResponse,
@@ -577,7 +580,7 @@ export const getImporter = <ThrowOnError extends boolean = false>(
  * Update an existing importer configuration
  */
 export const updateImporter = <ThrowOnError extends boolean = false>(
-  options: Options<UpdateImporterData, ThrowOnError>,
+  options: OptionsLegacyParser<UpdateImporterData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).put<
     UpdateImporterResponse,
@@ -593,7 +596,7 @@ export const updateImporter = <ThrowOnError extends boolean = false>(
  * Create a new importer configuration
  */
 export const createImporter = <ThrowOnError extends boolean = false>(
-  options: Options<CreateImporterData, ThrowOnError>,
+  options: OptionsLegacyParser<CreateImporterData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).post<
     CreateImporterResponse,
@@ -609,7 +612,7 @@ export const createImporter = <ThrowOnError extends boolean = false>(
  * Delete an importer configuration
  */
 export const deleteImporter = <ThrowOnError extends boolean = false>(
-  options: Options<DeleteImporterData, ThrowOnError>,
+  options: OptionsLegacyParser<DeleteImporterData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).delete<
     DeleteImporterResponse,
@@ -625,7 +628,7 @@ export const deleteImporter = <ThrowOnError extends boolean = false>(
  * Update an existing importer configuration
  */
 export const patchImporter = <ThrowOnError extends boolean = false>(
-  options: Options<PatchImporterData, ThrowOnError>,
+  options: OptionsLegacyParser<PatchImporterData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).patch<
     PatchImporterResponse,
@@ -641,7 +644,7 @@ export const patchImporter = <ThrowOnError extends boolean = false>(
  * Update an existing importer configuration
  */
 export const enableImporter = <ThrowOnError extends boolean = false>(
-  options: Options<EnableImporterData, ThrowOnError>,
+  options: OptionsLegacyParser<EnableImporterData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).put<
     EnableImporterResponse,
@@ -657,7 +660,7 @@ export const enableImporter = <ThrowOnError extends boolean = false>(
  * Force an importer to run as soon as possible
  */
 export const forceRunImporter = <ThrowOnError extends boolean = false>(
-  options: Options<ForceRunImporterData, ThrowOnError>,
+  options: OptionsLegacyParser<ForceRunImporterData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).post<
     ForceRunImporterResponse,
@@ -673,7 +676,7 @@ export const forceRunImporter = <ThrowOnError extends boolean = false>(
  * Get reports for an importer
  */
 export const listImporterReports = <ThrowOnError extends boolean = false>(
-  options: Options<ListImporterReportsData, ThrowOnError>,
+  options: OptionsLegacyParser<ListImporterReportsData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).get<
     ListImporterReportsResponse,
@@ -689,7 +692,7 @@ export const listImporterReports = <ThrowOnError extends boolean = false>(
  * List licenses
  */
 export const listLicenses = <ThrowOnError extends boolean = false>(
-  options?: Options<ListLicensesData, ThrowOnError>,
+  options?: OptionsLegacyParser<ListLicensesData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).get<
     ListLicensesResponse,
@@ -705,7 +708,7 @@ export const listLicenses = <ThrowOnError extends boolean = false>(
  * List SPDX licenses
  */
 export const listSpdxLicenses = <ThrowOnError extends boolean = false>(
-  options?: Options<ListSpdxLicensesData, ThrowOnError>,
+  options?: OptionsLegacyParser<ListSpdxLicensesData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).get<
     ListSpdxLicensesResponse,
@@ -721,7 +724,7 @@ export const listSpdxLicenses = <ThrowOnError extends boolean = false>(
  * Get SPDX license details
  */
 export const getSpdxLicense = <ThrowOnError extends boolean = false>(
-  options: Options<GetSpdxLicenseData, ThrowOnError>,
+  options: OptionsLegacyParser<GetSpdxLicenseData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).get<
     GetSpdxLicenseResponse,
@@ -737,7 +740,7 @@ export const getSpdxLicense = <ThrowOnError extends boolean = false>(
  * Retrieve license details
  */
 export const getLicenses = <ThrowOnError extends boolean = false>(
-  options: Options<GetLicensesData, ThrowOnError>,
+  options: OptionsLegacyParser<GetLicensesData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).get<
     GetLicensesResponse,
@@ -753,7 +756,7 @@ export const getLicenses = <ThrowOnError extends boolean = false>(
  * Retrieve pURLs covered by a license
  */
 export const getLicensePurls = <ThrowOnError extends boolean = false>(
-  options: Options<GetLicensePurlsData, ThrowOnError>,
+  options: OptionsLegacyParser<GetLicensePurlsData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).get<
     GetLicensePurlsResponse,
@@ -769,7 +772,7 @@ export const getLicensePurls = <ThrowOnError extends boolean = false>(
  * List organizations
  */
 export const listOrganizations = <ThrowOnError extends boolean = false>(
-  options?: Options<ListOrganizationsData, ThrowOnError>,
+  options?: OptionsLegacyParser<ListOrganizationsData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).get<
     ListOrganizationsResponse,
@@ -785,7 +788,7 @@ export const listOrganizations = <ThrowOnError extends boolean = false>(
  * Retrieve organization details
  */
 export const getOrganization = <ThrowOnError extends boolean = false>(
-  options: Options<GetOrganizationData, ThrowOnError>,
+  options: OptionsLegacyParser<GetOrganizationData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).get<
     GetOrganizationResponse,
@@ -798,7 +801,7 @@ export const getOrganization = <ThrowOnError extends boolean = false>(
 };
 
 export const listProducts = <ThrowOnError extends boolean = false>(
-  options?: Options<ListProductsData, ThrowOnError>,
+  options?: OptionsLegacyParser<ListProductsData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).get<
     ListProductsResponse,
@@ -811,7 +814,7 @@ export const listProducts = <ThrowOnError extends boolean = false>(
 };
 
 export const getProduct = <ThrowOnError extends boolean = false>(
-  options: Options<GetProductData, ThrowOnError>,
+  options: OptionsLegacyParser<GetProductData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).get<
     GetProductResponse,
@@ -824,7 +827,7 @@ export const getProduct = <ThrowOnError extends boolean = false>(
 };
 
 export const deleteProduct = <ThrowOnError extends boolean = false>(
-  options: Options<DeleteProductData, ThrowOnError>,
+  options: OptionsLegacyParser<DeleteProductData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).delete<
     DeleteProductResponse,
@@ -840,7 +843,7 @@ export const deleteProduct = <ThrowOnError extends boolean = false>(
  * List fully-qualified pURLs
  */
 export const listPurl = <ThrowOnError extends boolean = false>(
-  options?: Options<ListPurlData, ThrowOnError>,
+  options?: OptionsLegacyParser<ListPurlData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).get<
     ListPurlResponse,
@@ -856,7 +859,7 @@ export const listPurl = <ThrowOnError extends boolean = false>(
  * List base versionless pURLs
  */
 export const listBasePurls = <ThrowOnError extends boolean = false>(
-  options?: Options<ListBasePurlsData, ThrowOnError>,
+  options?: OptionsLegacyParser<ListBasePurlsData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).get<
     ListBasePurlsResponse,
@@ -872,7 +875,7 @@ export const listBasePurls = <ThrowOnError extends boolean = false>(
  * Retrieve details about a base versionless pURL
  */
 export const getBasePurl = <ThrowOnError extends boolean = false>(
-  options: Options<GetBasePurlData, ThrowOnError>,
+  options: OptionsLegacyParser<GetBasePurlData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).get<
     GetBasePurlResponse,
@@ -888,7 +891,7 @@ export const getBasePurl = <ThrowOnError extends boolean = false>(
  * List known pURL types
  */
 export const listPurlTypes = <ThrowOnError extends boolean = false>(
-  options?: Options<unknown, ThrowOnError>,
+  options?: OptionsLegacyParser<unknown, ThrowOnError>,
 ) => {
   return (options?.client ?? client).get<
     ListPurlTypesResponse,
@@ -904,7 +907,7 @@ export const listPurlTypes = <ThrowOnError extends boolean = false>(
  * Retrieve details about a pURL type
  */
 export const getPurlType = <ThrowOnError extends boolean = false>(
-  options: Options<GetPurlTypeData, ThrowOnError>,
+  options: OptionsLegacyParser<GetPurlTypeData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).get<
     GetPurlTypeResponse,
@@ -920,7 +923,7 @@ export const getPurlType = <ThrowOnError extends boolean = false>(
  * Retrieve base pURL details of a type
  */
 export const getBasePurlOfType = <ThrowOnError extends boolean = false>(
-  options: Options<GetBasePurlOfTypeData, ThrowOnError>,
+  options: OptionsLegacyParser<GetBasePurlOfTypeData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).get<
     GetBasePurlOfTypeResponse,
@@ -936,7 +939,7 @@ export const getBasePurlOfType = <ThrowOnError extends boolean = false>(
  * Retrieve versioned pURL details of a type
  */
 export const getVersionedPurlOfType = <ThrowOnError extends boolean = false>(
-  options: Options<GetVersionedPurlOfTypeData, ThrowOnError>,
+  options: OptionsLegacyParser<GetVersionedPurlOfTypeData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).get<
     GetVersionedPurlOfTypeResponse,
@@ -952,7 +955,7 @@ export const getVersionedPurlOfType = <ThrowOnError extends boolean = false>(
  * Retrieve details of a versioned, non-qualified pURL
  */
 export const getVersionedPurl = <ThrowOnError extends boolean = false>(
-  options: Options<GetVersionedPurlData, ThrowOnError>,
+  options: OptionsLegacyParser<GetVersionedPurlData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).get<
     GetVersionedPurlResponse,
@@ -968,7 +971,7 @@ export const getVersionedPurl = <ThrowOnError extends boolean = false>(
  * Retrieve details of a fully-qualified pURL
  */
 export const getPurl = <ThrowOnError extends boolean = false>(
-  options: Options<GetPurlData, ThrowOnError>,
+  options: OptionsLegacyParser<GetPurlData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).get<
     GetPurlResponse,
@@ -981,7 +984,7 @@ export const getPurl = <ThrowOnError extends boolean = false>(
 };
 
 export const listSboms = <ThrowOnError extends boolean = false>(
-  options?: Options<ListSbomsData, ThrowOnError>,
+  options?: OptionsLegacyParser<ListSbomsData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).get<
     ListSbomsResponse,
@@ -997,7 +1000,7 @@ export const listSboms = <ThrowOnError extends boolean = false>(
  * Upload a new SBOM
  */
 export const uploadSbom = <ThrowOnError extends boolean = false>(
-  options: Options<UploadSbomData, ThrowOnError>,
+  options: OptionsLegacyParser<UploadSbomData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).post<
     UploadSbomResponse,
@@ -1015,7 +1018,7 @@ export const uploadSbom = <ThrowOnError extends boolean = false>(
  * other APIs, but not both.
  */
 export const listRelatedSboms = <ThrowOnError extends boolean = false>(
-  options?: Options<ListRelatedSbomsData, ThrowOnError>,
+  options?: OptionsLegacyParser<ListRelatedSbomsData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).get<
     ListRelatedSbomsResponse,
@@ -1033,7 +1036,7 @@ export const listRelatedSboms = <ThrowOnError extends boolean = false>(
  * other APIs, but not both.
  */
 export const countRelatedSboms = <ThrowOnError extends boolean = false>(
-  options: Options<CountRelatedSbomsData, ThrowOnError>,
+  options: OptionsLegacyParser<CountRelatedSbomsData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).get<
     CountRelatedSbomsResponse,
@@ -1046,7 +1049,7 @@ export const countRelatedSboms = <ThrowOnError extends boolean = false>(
 };
 
 export const getSbom = <ThrowOnError extends boolean = false>(
-  options: Options<GetSbomData, ThrowOnError>,
+  options: OptionsLegacyParser<GetSbomData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).get<
     GetSbomResponse,
@@ -1059,7 +1062,7 @@ export const getSbom = <ThrowOnError extends boolean = false>(
 };
 
 export const deleteSbom = <ThrowOnError extends boolean = false>(
-  options: Options<DeleteSbomData, ThrowOnError>,
+  options: OptionsLegacyParser<DeleteSbomData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).delete<
     DeleteSbomResponse,
@@ -1072,7 +1075,7 @@ export const deleteSbom = <ThrowOnError extends boolean = false>(
 };
 
 export const getSbomAdvisories = <ThrowOnError extends boolean = false>(
-  options: Options<GetSbomAdvisoriesData, ThrowOnError>,
+  options: OptionsLegacyParser<GetSbomAdvisoriesData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).get<
     GetSbomAdvisoriesResponse,
@@ -1088,7 +1091,7 @@ export const getSbomAdvisories = <ThrowOnError extends boolean = false>(
  * Replace the labels of an SBOM
  */
 export const updateSbomLabels = <ThrowOnError extends boolean = false>(
-  options: Options<UpdateSbomLabelsData, ThrowOnError>,
+  options: OptionsLegacyParser<UpdateSbomLabelsData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).put<
     UpdateSbomLabelsResponse,
@@ -1104,7 +1107,7 @@ export const updateSbomLabels = <ThrowOnError extends boolean = false>(
  * Modify existing labels of an SBOM
  */
 export const patchSbomLabels = <ThrowOnError extends boolean = false>(
-  options: Options<PatchSbomLabelsData, ThrowOnError>,
+  options: OptionsLegacyParser<PatchSbomLabelsData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).patch<
     PatchSbomLabelsResponse,
@@ -1120,7 +1123,7 @@ export const patchSbomLabels = <ThrowOnError extends boolean = false>(
  * Search for packages of an SBOM
  */
 export const listPackages = <ThrowOnError extends boolean = false>(
-  options: Options<ListPackagesData, ThrowOnError>,
+  options: OptionsLegacyParser<ListPackagesData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).get<
     ListPackagesResponse,
@@ -1136,7 +1139,7 @@ export const listPackages = <ThrowOnError extends boolean = false>(
  * Search for related packages in an SBOM
  */
 export const listRelatedPackages = <ThrowOnError extends boolean = false>(
-  options: Options<ListRelatedPackagesData, ThrowOnError>,
+  options: OptionsLegacyParser<ListRelatedPackagesData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).get<
     ListRelatedPackagesResponse,
@@ -1149,7 +1152,7 @@ export const listRelatedPackages = <ThrowOnError extends boolean = false>(
 };
 
 export const downloadSbom = <ThrowOnError extends boolean = false>(
-  options: Options<DownloadSbomData, ThrowOnError>,
+  options: OptionsLegacyParser<DownloadSbomData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).get<
     DownloadSbomResponse,
@@ -1165,7 +1168,7 @@ export const downloadSbom = <ThrowOnError extends boolean = false>(
  * Get user preferences
  */
 export const getUserPreferences = <ThrowOnError extends boolean = false>(
-  options: Options<GetUserPreferencesData, ThrowOnError>,
+  options: OptionsLegacyParser<GetUserPreferencesData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).get<
     GetUserPreferencesResponse,
@@ -1181,7 +1184,7 @@ export const getUserPreferences = <ThrowOnError extends boolean = false>(
  * Set user preferences
  */
 export const setUserPreferences = <ThrowOnError extends boolean = false>(
-  options: Options<SetUserPreferencesData, ThrowOnError>,
+  options: OptionsLegacyParser<SetUserPreferencesData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).put<
     SetUserPreferencesResponse,
@@ -1197,7 +1200,7 @@ export const setUserPreferences = <ThrowOnError extends boolean = false>(
  * Delete user preferences
  */
 export const deleteUserPreferences = <ThrowOnError extends boolean = false>(
-  options: Options<DeleteUserPreferencesData, ThrowOnError>,
+  options: OptionsLegacyParser<DeleteUserPreferencesData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).delete<
     DeleteUserPreferencesResponse,
@@ -1213,7 +1216,7 @@ export const deleteUserPreferences = <ThrowOnError extends boolean = false>(
  * List vulnerabilities
  */
 export const listVulnerabilities = <ThrowOnError extends boolean = false>(
-  options?: Options<ListVulnerabilitiesData, ThrowOnError>,
+  options?: OptionsLegacyParser<ListVulnerabilitiesData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).get<
     ListVulnerabilitiesResponse,
@@ -1229,7 +1232,7 @@ export const listVulnerabilities = <ThrowOnError extends boolean = false>(
  * Retrieve vulnerability details
  */
 export const getVulnerability = <ThrowOnError extends boolean = false>(
-  options: Options<GetVulnerabilityData, ThrowOnError>,
+  options: OptionsLegacyParser<GetVulnerabilityData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).get<
     GetVulnerabilityResponse,
@@ -1245,7 +1248,7 @@ export const getVulnerability = <ThrowOnError extends boolean = false>(
  * Delete vulnerability
  */
 export const deleteVulnerability = <ThrowOnError extends boolean = false>(
-  options: Options<DeleteVulnerabilityData, ThrowOnError>,
+  options: OptionsLegacyParser<DeleteVulnerabilityData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).delete<
     DeleteVulnerabilityResponse,
@@ -1261,7 +1264,7 @@ export const deleteVulnerability = <ThrowOnError extends boolean = false>(
  * List weaknesses
  */
 export const listWeaknesses = <ThrowOnError extends boolean = false>(
-  options?: Options<ListWeaknessesData, ThrowOnError>,
+  options?: OptionsLegacyParser<ListWeaknessesData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).get<
     ListWeaknessesResponse,
@@ -1277,7 +1280,7 @@ export const listWeaknesses = <ThrowOnError extends boolean = false>(
  * Retrieve weakness details
  */
 export const getWeakness = <ThrowOnError extends boolean = false>(
-  options: Options<GetWeaknessData, ThrowOnError>,
+  options: OptionsLegacyParser<GetWeaknessData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).get<
     GetWeaknessResponse,
