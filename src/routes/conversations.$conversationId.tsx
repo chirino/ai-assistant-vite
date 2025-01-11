@@ -17,7 +17,7 @@ import ChatbotFooter, {
 } from "@patternfly/chatbot/dist/esm/ChatbotFooter";
 import MessageBar from "@patternfly/chatbot/dist/esm/MessageBar";
 import { useAuth } from "react-oidc-context";
-import {useQueryClient} from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 
 export const Route = createFileRoute("/conversations/$conversationId")({
   component: ConversationMessageBox,
@@ -65,7 +65,7 @@ function ConversationMessageBox() {
       }
 
       // a conversation will not exist in conversations list until the first bot message is sent
-      if ( botMessageCount == 1 ) {
+      if (botMessageCount == 1) {
         queryClient.invalidateQueries({ queryKey: [ConversationsQueryKey] });
       }
     });
@@ -78,6 +78,7 @@ function ConversationMessageBox() {
     conversationQuery.isLoading,
     userName,
     userPicture,
+    queryClient,
   ]);
 
   // const [messages, setMessages] = React.useState<MessageProps[]>(initialMessages);
