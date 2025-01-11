@@ -30,27 +30,31 @@ pub struct UI {
     pub analytics_write_key: String,
 }
 
+pub fn generate_env_js(ui: &UI) -> anyhow::Result<(String, u64)> {
+    let env = serde_json::to_string_pretty(ui)?;
+    let now = std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)?
+        .as_millis();
+    let now = now as u64;
+
+    Ok((format!("window._env = {env}"), now))
+}
+
 pub fn trustify_ui(ui: &UI) -> anyhow::Result<HashMap<&'static str, Resource>> {
     let mut resources = generate();
 
     let (env_js, modified) = ENV_JS.get_or_init(|| {
-        let env = serde_json::to_string_pretty(ui)?;
+        generate_env_js(ui).unwrap_or_else(|err| {
+            eprintln!("Failed to generate env.js: {}", err);
+            ("{}".to_string(), 0)
+        })
+    });
 
-        let now = std::time::SystemTime::now()
-            .duration_since(std::time::UNIX_EPOCH)?
-            .as_millis();
-        let now = now as u64;
-
-        Ok((format!("window._env = {env}"), now))
-    })?;
-
-    // let (env_js, modified) = match result {
-    //     Ok((index_html, modified)) => (index_html.as_bytes(), *modified),
-    //     Err(err) => return Err(anyhow!(err)),
-    // };
-
-    resources.insert("env.js", new_resource(env_js, modified, "text/html"));
+    resources.insert(
+        "env.js",
+        new_resource(env_js.as_bytes(), *modified, "text/javascript"),
+    );
     Ok(resources)
 }
 
-static ENV_JS: OnceLock<anyhow::Result<(String, u64)>> = OnceLock::new();
+static ENV_JS: OnceLock<(String, u64)> = OnceLock::new();
