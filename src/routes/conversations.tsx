@@ -63,7 +63,6 @@ function Conversations() {
       });
     });
 
-    console.log("memo conversations", results);
     return results;
   }, [listConversationsQuery, navigate]);
 
@@ -109,7 +108,6 @@ function Conversations() {
         setIsDrawerOpen={setIsDrawerOpen}
         activeItemId="1"
         onSelectActiveItem={(_e, conversationId) => {
-          console.log(`Selected conversation with id ${conversationId}`);
           navigate({
             to: `/conversations/${conversationId}`,
           });

@@ -8,7 +8,7 @@ import Message, { MessageProps } from "@patternfly/chatbot/dist/esm/Message";
 import React, { useMemo } from "react";
 import userAvatar from "@src/assets/user_avatar.svg";
 import patternflyAvatar from "@src/assets/patternfly_avatar.jpg";
-import { Conversation as ApiConversation } from "@src/client";
+import { ChatMessage } from "@src/client";
 import ChatbotContent from "@patternfly/chatbot/dist/esm/ChatbotContent";
 import MessageBox from "@patternfly/chatbot/dist/esm/MessageBox";
 import ChatbotWelcomePrompt from "@patternfly/chatbot/dist/esm/ChatbotWelcomePrompt";
@@ -35,6 +35,9 @@ function ConversationMessageBox() {
     ];
   }, [auth]);
 
+  const updateConversationMutation =
+    useUpdateConversationMutation(conversationId);
+
   const queryClient = useQueryClient();
   // const messages = (conversationQuery.data?.state.messages) || [];
   const messages: MessageProps[] = useMemo(() => {
@@ -44,7 +47,14 @@ function ConversationMessageBox() {
     const results = [] as MessageProps[];
     let botMessageCount = 0;
 
-    conversationQuery.data.messages.forEach((message) => {
+    const messages = [...conversationQuery.data.messages];
+
+    // optimistic update:
+    if (updateConversationMutation.isPending) {
+      messages.push(...updateConversationMutation.variables.messages);
+    }
+
+    messages.forEach((message) => {
       if (message.message_type == "human") {
         results.push({
           content: message.content,
@@ -70,8 +80,6 @@ function ConversationMessageBox() {
       }
     });
 
-    console.log("results", results);
-
     return results;
   }, [
     conversationQuery.data,
@@ -79,6 +87,7 @@ function ConversationMessageBox() {
     userName,
     userPicture,
     queryClient,
+    updateConversationMutation,
   ]);
 
   // const [messages, setMessages] = React.useState<MessageProps[]>(initialMessages);
@@ -93,43 +102,37 @@ function ConversationMessageBox() {
     }
   }, [messages]);
 
-  const [, setNewMessages] = React.useState<Array<string>>([]);
-  const updateConversationMutation =
-    useUpdateConversationMutation(conversationId);
-
   const handleSend = (message: string) => {
     setAnnouncement(
       `Message from User: ${message}. Message from Bot is loading.`,
     );
-    setNewMessages((prev) => {
-      const newMessages = [...prev, message];
 
-      // clone the conversationQuery.data object
-      const update = JSON.parse(
-        JSON.stringify(conversationQuery.data),
-      ) as ApiConversation;
-      // for each item in newMessages
-      newMessages.forEach((message) => {
-        update.seq += 1;
-        update.messages.push({
-          message_type: "human",
-          content: message,
-          timestamp: new Date().toISOString(),
-        });
-      });
+    const update = {
+      seq: conversationQuery.data?.seq || 0,
+      messages: [] as Array<ChatMessage>,
+    };
 
-      (async () => {
-        const conversation =
-          await updateConversationMutation.mutateAsync(update);
-        const messages = conversation.messages;
-        setNewMessages([]);
-        setAnnouncement(
-          `Message from Bot: ${messages[messages.length - 1].content}`,
-        );
-      })();
+    if (updateConversationMutation.isPending) {
+      update.seq += 1;
+      update.messages.push(...updateConversationMutation.variables.messages);
+    } else {
+      update.seq = conversationQuery.data?.seq || 0;
+    }
 
-      return newMessages;
+    console.log("seq", update.seq);
+    update.messages.push({
+      message_type: "human",
+      content: message,
+      timestamp: new Date().toISOString(),
     });
+
+    (async () => {
+      const conversation = await updateConversationMutation.mutateAsync(update);
+      const messages = conversation.messages;
+      setAnnouncement(
+        `Message from Bot: ${messages[messages.length - 1].content}`,
+      );
+    })();
   };
 
   const footnoteProps = {
@@ -175,10 +178,10 @@ function ConversationMessageBox() {
           {messages.map((message, index) => {
             if (index === messages.length - 1) {
               return (
-                <>
+                <div key={index}>
                   <div ref={scrollToBottomRef}></div>
-                  <Message key={index} {...message} />
-                </>
+                  <Message {...message} />
+                </div>
               );
             }
             return <Message key={index} {...message} />;

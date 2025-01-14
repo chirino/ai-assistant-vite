@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { client } from "@src/axios-config/apiInit";
 import {
-  Conversation,
+  ChatMessage,
   createConversation,
   CreateConversationResponse,
   getConversation,
@@ -31,61 +31,35 @@ export const useCreateConversationMutation = (
 
 export const useUpdateConversationMutation = (
   id: string,
-  onError?: (err: AxiosError, req: Conversation) => void,
-  onSuccess?: (resp: CreateConversationResponse, req: Conversation) => void,
+  onError?: (
+    err: AxiosError,
+    req: { seq: number; messages: Array<ChatMessage> },
+  ) => void,
+  onSuccess?: (
+    resp: CreateConversationResponse,
+    req: { seq: number; messages: Array<ChatMessage> },
+  ) => void,
 ) => {
   const queryClient = useQueryClient();
-
   return useMutation({
     mutationKey: [ConversationsQueryKey, id],
-    mutationFn: async (req: Conversation) => {
+    mutationFn: async (req) => {
       const response = await updateConversation({
         client,
         path: { id: id },
-        body: req,
+        body: req.messages,
+        headers: {
+          "if-match": `${req.seq}`,
+        },
       });
       return response.data as CreateConversationResponse;
     },
-
     onSuccess,
-
-    // When mutate is called:
-    onMutate: async (newConversation: Conversation) => {
-      // Cancel any outgoing refetch
-      // (so they don't overwrite our optimistic update)
-      const queryKey = [ConversationsQueryKey, id];
-      await queryClient.cancelQueries({ queryKey });
-
-      // Snapshot the previous value
-      const previousQueryData = queryClient.getQueryData(queryKey) as
-        | Conversation
-        | undefined;
-
-      // Optimistically update to the new value
-      if (previousQueryData) {
-        queryClient.setQueryData(queryKey, newConversation);
-      }
-
-      return { previousQueryData: previousQueryData };
-    },
-
-    // If the mutation fails,
-    // use the context returned from onMutate to roll back
-    onError: (err, newConversation, context) => {
-      if (context?.previousQueryData) {
-        queryClient.setQueryData<Conversation>(
-          [ConversationsQueryKey, id],
-          context?.previousQueryData,
-        );
-      }
-      if (onError) {
-        onError(err as AxiosError, newConversation);
-      }
-    },
-
-    // Always refetch after error or success:
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: [ConversationsQueryKey, id] });
+    onError,
+    onSettled: async () => {
+      return await queryClient.invalidateQueries({
+        queryKey: [ConversationsQueryKey, id],
+      });
     },
   });
 };

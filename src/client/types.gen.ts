@@ -1164,7 +1164,13 @@ export type GetConversationResponse = Conversation;
 export type GetConversationError = unknown;
 
 export type UpdateConversationData = {
-  body: Conversation;
+  body: Array<ChatMessage>;
+  headers?: {
+    /**
+     * The revision to update
+     */
+    "if-match"?: string | null;
+  };
   path: {
     /**
      * Opaque ID of the conversation
