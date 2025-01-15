@@ -42,7 +42,6 @@ export const useUpdateConversationMutation = (
 ) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationKey: [ConversationsQueryKey, id],
     mutationFn: async (req) => {
       const response = await updateConversation({
         client,
@@ -56,10 +55,13 @@ export const useUpdateConversationMutation = (
     },
     onSuccess,
     onError,
-    onSettled: async () => {
-      return await queryClient.invalidateQueries({
-        queryKey: [ConversationsQueryKey, id],
-      });
+    onSettled: async (resp, error) => {
+      if (error) {
+        await queryClient.invalidateQueries({
+          queryKey: [ConversationsQueryKey, id],
+        });
+      }
+      await queryClient.setQueryData([ConversationsQueryKey, id], resp);
     },
   });
 };

@@ -49,7 +49,7 @@ function ConversationMessageBox() {
 
     const messages = [...conversationQuery.data.messages];
 
-    // optimistic update:
+    // update is in progress, be optimistic and assume the update will succeed
     if (updateConversationMutation.isPending) {
       messages.push(...updateConversationMutation.variables.messages);
     }
@@ -71,6 +71,18 @@ function ConversationMessageBox() {
           name: "Assistant",
           avatar: patternflyAvatar,
           timestamp: message.timestamp,
+        });
+      }
+
+      // shows the bot "typing bubbles" indicator
+      if (updateConversationMutation.isPending) {
+        results.push({
+          role: "bot",
+          content: "API response goes here",
+          name: "Assistant",
+          avatar: patternflyAvatar,
+          isLoading: true,
+          timestamp: new Date().toLocaleString(),
         });
       }
 
@@ -113,6 +125,8 @@ function ConversationMessageBox() {
     };
 
     if (updateConversationMutation.isPending) {
+      // an update is already in progress, so we need to include the previous messages too,
+      // and increment the sequence number so that the server can make this update win.
       update.seq += 1;
       update.messages.push(...updateConversationMutation.variables.messages);
     } else {
