@@ -1,7 +1,5 @@
 // this is a modified version of the packages/module/patternfly-docs/content/extensions/chatbot/examples/demos/EmbeddedChatbot.tsx
 // component from the PatternFly Chatbot demo
-import PFHorizontalLogoColor from "@src/assets/PF-HorizontalLogo-Color.svg";
-import PFHorizontalLogoReverse from "@src/assets/PF-HorizontalLogo-Reverse.svg";
 import Chatbot, {
   ChatbotDisplayMode,
 } from "@patternfly/chatbot/dist/dynamic/Chatbot";
@@ -13,8 +11,8 @@ import ChatbotHeader, {
   ChatbotHeaderMenu,
   ChatbotHeaderTitle,
 } from "@patternfly/chatbot/dist/dynamic/ChatbotHeader";
-import { Brand, Bullseye } from "@patternfly/react-core";
-import React, { useMemo } from "react";
+import { Bullseye, Title } from "@patternfly/react-core";
+import React from "react";
 import {
   useCreateConversationMutation,
   useListConversationsQuery,
@@ -32,7 +30,7 @@ function Conversations() {
   const [conversationFilter, setConversationFilter] = React.useState("");
   const listConversationsQuery = useListConversationsQuery(conversationFilter);
 
-  const conversations = useMemo(() => {
+  const conversations = (() => {
     if (
       listConversationsQuery.isLoading ||
       listConversationsQuery.data == null
@@ -64,7 +62,7 @@ function Conversations() {
     });
 
     return results;
-  }, [listConversationsQuery, navigate]);
+  })();
 
   // We don't support choosing a model yet, disable for now:
   // const [selectedModel, setSelectedModel] = React.useState('Granite 7B');
@@ -83,16 +81,18 @@ function Conversations() {
 
   const horizontalLogo = (
     <Bullseye>
-      <Brand
-        className="show-light"
-        src={PFHorizontalLogoColor}
-        alt="PatternFly"
-      />
-      <Brand
-        className="show-dark"
-        src={PFHorizontalLogoReverse}
-        alt="PatternFly"
-      />
+      <Title headingLevel="h1">AI Assistant</Title>
+
+      {/*<Brand*/}
+      {/*  className="show-light"*/}
+      {/*  src={PFHorizontalLogoColor}*/}
+      {/*  alt="PatternFly"*/}
+      {/*/>*/}
+      {/*<Brand*/}
+      {/*  className="show-dark"*/}
+      {/*  src={PFHorizontalLogoReverse}*/}
+      {/*  alt="PatternFly"*/}
+      {/*/>*/}
     </Bullseye>
   );
 

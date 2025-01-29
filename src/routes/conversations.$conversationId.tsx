@@ -5,7 +5,7 @@ import {
   useUpdateConversationMutation,
 } from "@src/queries/conversations.ts";
 import Message, { MessageProps } from "@patternfly/chatbot/dist/esm/Message";
-import React, { useMemo } from "react";
+import React from "react";
 import userAvatar from "@src/assets/user_avatar.svg";
 import patternflyAvatar from "@src/assets/patternfly_avatar.jpg";
 import { ChatMessage } from "@src/client";
@@ -28,19 +28,16 @@ function ConversationMessageBox() {
   const conversationQuery = useGetConversationQuery(conversationId);
 
   const auth = useAuth();
-  const [userName, userPicture] = useMemo(() => {
-    return [
-      auth.user?.profile.preferred_username || auth.user?.profile.sub,
-      auth.user?.profile.picture,
-    ];
-  }, [auth]);
+  const [userName, userPicture] = [
+    auth.user?.profile.preferred_username || auth.user?.profile.sub,
+    auth.user?.profile.picture,
+  ];
 
   const updateConversationMutation =
     useUpdateConversationMutation(conversationId);
 
   const queryClient = useQueryClient();
-  // const messages = (conversationQuery.data?.state.messages) || [];
-  const messages: MessageProps[] = useMemo(() => {
+  const messages: MessageProps[] = (() => {
     if (conversationQuery.isLoading || conversationQuery.data == null) {
       return [];
     }
@@ -93,16 +90,8 @@ function ConversationMessageBox() {
     });
 
     return results;
-  }, [
-    conversationQuery.data,
-    conversationQuery.isLoading,
-    userName,
-    userPicture,
-    queryClient,
-    updateConversationMutation,
-  ]);
+  })();
 
-  // const [messages, setMessages] = React.useState<MessageProps[]>(initialMessages);
   const [announcement, setAnnouncement] = React.useState<string>();
   const scrollToBottomRef = React.useRef<HTMLDivElement>(null);
 
